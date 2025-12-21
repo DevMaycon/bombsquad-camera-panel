@@ -1,0 +1,30 @@
+body {
+    background-color: rgb(65, 10, 65);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#cameras {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera {
+    cursor: pointer;
+    background-color: rgb(79, 0, 108);
+    text-align: center;
+    margin: auto;
+    width: 300px;
+    padding: 5px;
+    margin: 20px;
+    border-radius: 20px;
+    border: 2px solid white;
+    border-top: none;
+    border-bottom: 3px solid white;
+}
+
+.camera h2 {
+    position: relative;
+    top: -25px;
+    color: white;
+}
