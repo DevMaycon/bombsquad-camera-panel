@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/welcome.css">
+        <title>Welcome!</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="page-title">
+            <h1>Welcome to camera Dashboard!</h1>
+            <div class="camera-dashboard-form">
+                <form id="connect-form" action="panel/index.html" method="get">
+                    <div class="inputs">
+                        <label for="ip">Camera IP:</label>
+                        <input id="IP" type="text" name="ip">
+                    </div>
+
+                    <div class="inputs">
+                        <label for="port">PORT:</label>
+                        <input id="PORT" type="number" name="port" value="43215" max="65432" min="1024" maxlength="5">
+                    </div>
+                    <button> Connect </button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
