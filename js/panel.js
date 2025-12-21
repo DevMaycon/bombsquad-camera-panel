@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    let connection = fetch(`http://${ip}:${port}/`, {
+    let connection = fetch(`https://${ip}:${port}/`, {
         method: 'POST', // Specify the method
         headers: {
           'Content-Type': 'application/json', // Indicate the content type
