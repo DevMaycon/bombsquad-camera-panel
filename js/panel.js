@@ -1,16 +1,15 @@
 const inputs = new URLSearchParams(window.location.search);
 const ip = inputs.get('ip');
 const port = inputs.get('port');
+const server_hostname = `https://${ip}:${port}/`
 
+// Do verification of inputs!
+if (!ip || !port) {
+    document.body.innerHTML = '<h1>Invalid parameters provided.</h1>';
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Do verification of inputs!
-    if (!ip || !port) {
-        document.body.innerHTML = '<h1>Invalid parameters provided.</h1>';
-        return;
-    }
-
-    let connection = fetch(`https://${ip}:${port}/`, {
+    let connection = fetch(server_hostname, {
         method: 'POST', // Specify the method
         headers: {
           'Content-Type': 'application/json', // Indicate the content type
@@ -27,13 +26,31 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(error => console.error('Error:', error)); // Handle network errors
 })
 
+function SetRemoteCamera(camera_element) {
+    let connection = fetch(server_hostname, {
+        method: 'POST', // Specify the method
+        headers: {
+          'Content-Type': 'application/json', // Indicate the content type
+        },
+        body: JSON.stringify({
+            action: 'set_camera',
+            camera_id: camera_element.className.split(' ')[1].toLowerCase()
+        })
+      })
+      .then(response => {
+        response.json().then(data => {
+            console.log('Success:', data);
+        })
+      }) // Parse the response as JSON  
+      .catch(error => console.error('Error:', error)); // Handle network errors
+}
 
-function CreateCameraNode(camera) {
+function CreateCameraNode(camera, camera_name) {
+    let real_name = camera_name
 
     let container = document.createElement('div')
-    container.className = "camera";
-
-    let real_name = Object.keys(camera)[0]
+    container.className = `camera ${real_name}` ;
+    container.onclick = function() { SetRemoteCamera(container); };
 
     let title = document.createElement('h2');
     title.innerText = real_name[0].toUpperCase() + real_name.slice(1);
@@ -49,10 +66,10 @@ function CreateCameraNode(camera) {
 
 function CreateCameraNodes(data) {
     document.title = "Camera Panel";
-    cameras = data["Cameras"]
+    cameras = data["cameras"]
 
     let camerasContainer = document.getElementById('cameras');
-    cameras.forEach(element => {
-        camerasContainer.appendChild(CreateCameraNode(element));
+    Object.keys(cameras).forEach(camera_name => {
+        camerasContainer.appendChild(CreateCameraNode(cameras[camera_name], camera_name));
     });
 }
